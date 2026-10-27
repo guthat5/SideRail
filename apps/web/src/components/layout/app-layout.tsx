@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ShoppingBag } from "lucide-react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -35,6 +36,7 @@ import type { Permission } from "@/lib/types";
 const nav: {
   to: string;
   labelKey: "dashboard" | "users" | "inbounds" | "routing" | "activityLog" | "telegramBot" | "settings";
+  label?: string;
   icon: typeof LayoutDashboard;
   end: boolean;
   perm: Permission;
@@ -42,6 +44,7 @@ const nav: {
 }[] = [
   { to: "/", labelKey: "dashboard", icon: LayoutDashboard, end: true, perm: "dashboard" },
   { to: "/users", labelKey: "users", icon: Users, end: false, perm: "users" },
+  { to: "/shop-users", labelKey: "users", label: "Shop Users", icon: ShoppingBag, end: false, perm: "users" },
   { to: "/inbounds", labelKey: "inbounds", icon: Router, end: false, perm: "inbounds" },
   { to: "/routing", labelKey: "routing", icon: Ban, end: false, perm: "routing" },
   { to: "/activity", labelKey: "activityLog", icon: ScrollText, end: false, perm: "activity" },
@@ -94,7 +97,7 @@ function NavItems({
           }
         >
           <item.icon className="h-5 w-5 transition-transform group-hover:scale-110" />
-          {t(item.labelKey as never)}
+          {item.label ?? t(item.labelKey as never)}
         </NavLink>
         ))}
     </nav>

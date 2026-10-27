@@ -23,6 +23,8 @@ import BotPage from "./pages/bot";
 import ActivityPage from "./pages/activity";
 import SettingsPage from "./pages/settings";
 import SubscriptionPage from "./pages/subscription";
+import ShopPage from "./pages/shop";
+import ShopUsersPage from "./pages/shop-users";
 
 const PERM_ROUTE: Record<string, string> = {
   dashboard: "/",
@@ -74,6 +76,7 @@ export default function App() {
     <Routes>
       <Route path="/sub/:token/view" element={<SubscriptionPage />} />
       <Route path="/sub/:token" element={<SubscriptionPage />} />
+      <Route path="/shop" element={<ShopPage />} />
       <Route
         path="/setup"
         element={
@@ -120,6 +123,14 @@ export default function App() {
           element={
             <RequirePerm perm="users">
               <UsersPage />
+            </RequirePerm>
+          }
+        />
+        <Route
+          path="/shop-users"
+          element={
+            <RequirePerm perm="users">
+              <ShopUsersPage />
             </RequirePerm>
           }
         />

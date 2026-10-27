@@ -27,6 +27,7 @@ import { applyTrafficReset } from "./users.js";
 import { enforceAdminExpiry } from "./auth.js";
 import { rateLimit } from "./ratelimit.js";
 import { sendDailyBackup, startBotPolling } from "./bot.js";
+import { siteRouter, siteAdminRouter } from "./site.js";
 import { refreshIpInfo } from "./ipinfo.js";
 import { SIDERAIL_SIGNATURE, watermark } from "./brand.js";
 
@@ -52,6 +53,8 @@ app.use(cookieParser());
 app.set("trust proxy", true);
 app.get("/healthz", (_req, res) => res.json({ ok: true, ...watermark() }));
 
+app.use("/site-api", siteRouter);
+app.use("/api/site-admin", siteAdminRouter);
 app.use("/api", rateLimit, api);
 app.use("/sub", sub);
 
@@ -65,7 +68,7 @@ if (fs.existsSync(staticDir)) {
   setSubStaticRoot(staticDir);
   app.use(express.static(staticDir));
   app.get("*", (req, res, next) => {
-    if (req.path.startsWith("/api") || req.path.startsWith("/sub")) return next();
+    if (req.path.startsWith("/api") || req.path.startsWith("/sub") || req.path.startsWith("/site-api")) return next();
     res.sendFile(path.join(staticDir, "index.html"));
   });
 }

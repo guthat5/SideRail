@@ -39,9 +39,9 @@ export function toBoldAscii(input: string): string {
   return out;
 }
 
-/** Config / subscription name: 𝗦𝗶𝗱𝗲𝗥𝗮𝗶𝗹 - <client name> */
+/** Config / subscription name: the client (key) name, e.g. Turbo key-3fa91c */
 export function configName(user: UserWithInbounds): string {
-  return `${toBoldAscii("SideRail")} - ${toBoldAscii(user.email)}`;
+  return toBoldAscii(user.email);
 }
 
 function commonQuery(ctx: LinkContext): Record<string, string> {
